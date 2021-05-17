@@ -1,0 +1,7 @@
+query ListTodos {
+  todos {
+    id
+    task
+    complete
+  }
+}

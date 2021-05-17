@@ -1,23 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import { useQuery } from '@apollo/client';
+import { gql } from '@apollo/client/core';
 
 function App() {
+  const { loading, data: { todos } = {} } = useQuery(gql`
+    
+  `);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  const addTodo = () => {}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ul>
+        {todos.map((t) => (
+          <li>
+            {t.task}
+            {t.complete}
+          </li>
+        ))}
+      </ul>
+      <hr />
+      <input type="text" onChange={updateText} />
+
+      <button onClick={addTodo}>Add todo</button>
     </div>
   );
 }
