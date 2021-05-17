@@ -1,12 +1,9 @@
-import logo from './logo.svg';
 import './App.css';
 import { useQuery } from '@apollo/client';
-import { gql } from '@apollo/client/core';
+import ListTodos from './graphql/ListTodos.query.graphql'
 
 function App() {
-  const { loading, data: { todos } = {} } = useQuery(gql`
-    
-  `);
+  const { loading, data: { todos } = {} } = useQuery(ListTodos);
 
   if (loading) {
     return <div>Loading...</div>;
