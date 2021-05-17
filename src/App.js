@@ -1,30 +1,43 @@
 import './App.css';
-import { useQuery } from '@apollo/client';
-import ListTodos from './graphql/ListTodos.query.graphql'
+import { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import ListTodos from './graphql/ListTodos.query.graphql';
+import AddTodoMutation from './graphql/AddTodo.mutation.graphql';
 
 function App() {
   const { loading, data: { todos } = {} } = useQuery(ListTodos);
+  const [addTodo] = useMutation(AddTodoMutation);
+
+  const [newTodoText, setNewTodoText] = useState('');
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  const addTodo = () => {}
-
   return (
     <div className="App">
       <ul>
         {todos.map((t) => (
-          <li>
+          <li key={t.id}>
             {t.task}
             {t.complete}
           </li>
         ))}
       </ul>
       <hr />
-      <input type="text" onChange={updateText} />
+      <input type="text" value={newTodoText} onChange={(e) => setNewTodoText(e.target.value)} />
 
-      <button onClick={addTodo}>Add todo</button>
+      <button
+        onClick={() =>
+          addTodo({
+            variables: {
+              text: newTodoText
+            }
+          })
+        }
+      >
+        Add todo
+      </button>
     </div>
   );
 }

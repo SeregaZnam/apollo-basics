@@ -1,0 +1,9 @@
+mutation AddTodo($text: String!) {
+  newTodo(data: { task: $text, complete: false }) {
+    node {
+      complete
+      id
+      task
+    }
+  }
+}
