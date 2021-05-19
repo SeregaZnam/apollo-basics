@@ -1,0 +1,9 @@
+mutation EditTodo($id: ID!, $text: String!) {
+  editTodo(where: { id: $id }, fields: { task: $text }) {
+    node {
+      id
+      task
+      complete
+    }
+  }
+}
