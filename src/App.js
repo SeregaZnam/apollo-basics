@@ -9,7 +9,13 @@ import produce from 'immer';
 
 function App() {
   const { loading, data: { todos } = {} } = useQuery(ListTodosQuery);
-  const [removeTodo] = useMutation(RemoveTodoMutation);
+  const [removeTodo] = useMutation(RemoveTodoMutation, {
+    refetchQueries: [
+      {
+        query: ListTodosQuery,
+      },
+    ],
+  });
   const [addTodo] = useMutation(AddTodoMutation, {
     update(cache, result) {
       const listTodosQueryResults = cache.readQuery({ query: ListTodosQuery });
@@ -20,9 +26,9 @@ function App() {
 
       cache.writeQuery({
         query: ListTodosQuery,
-        data: newListTodosQueryResults
+        data: newListTodosQueryResults,
       });
-    }
+    },
   });
   const [editTodo] = useMutation(EditTodoMutation);
 
@@ -44,8 +50,8 @@ function App() {
                 editTodo({
                   variables: {
                     id: t.id,
-                    text: `[MODIFIED ${Math.random()}] ${t.task}`
-                  }
+                    text: `[MODIFIED ${Math.random()}] ${t.task}`,
+                  },
                 });
               }}
             >
@@ -55,8 +61,8 @@ function App() {
               onClick={() => {
                 removeTodo({
                   variables: {
-                    id: t.id
-                  }
+                    id: t.id,
+                  },
                 });
               }}
             >
@@ -72,8 +78,8 @@ function App() {
         onClick={() =>
           addTodo({
             variables: {
-              text: newTodoText
-            }
+              text: newTodoText,
+            },
           })
         }
       >
