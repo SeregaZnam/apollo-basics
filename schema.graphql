@@ -9,7 +9,7 @@ schema {
 type Mutation {
     editTodo(fields: UpdateTodo, where: TodoInput): TodoResponse!
     newTodo(data: TodoInput): TodoResponse!
-    removeTodo(where: TodoInput): Boolean!
+    removeTodo(where: TodoInput): [ID!]!
 }
 
 type Query {

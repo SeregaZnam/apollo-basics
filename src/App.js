@@ -47,10 +47,18 @@ function App() {
             {t.complete}
             <button
               onClick={() => {
+                const text = `[MODIFIED ${Math.random()} ${t.task}]`;
                 editTodo({
                   variables: {
                     id: t.id,
-                    text: `[MODIFIED ${Math.random()}] ${t.task}`,
+                    text,
+                  },
+                  optimisticResponse: {
+                    mutation: 'UPDATED',
+                    node: {
+                      ...t,
+                      task: text,
+                    },
                   },
                 });
               }}
