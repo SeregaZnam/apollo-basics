@@ -48,18 +48,24 @@ function App() {
             <button
               onClick={() => {
                 const text = `[MODIFIED ${Math.random()} ${t.task}]`;
+
+                const optimisticResponse = {
+                  __typename: 'TodoResponse',
+                  mutation: 'UPDATED',
+                  node: {
+                    __typename: 'Todo',
+                    id: t.id,
+                    task: `OPTIMISTIC ${t.task}`,
+                  },
+                };
+
+                console.log(optimisticResponse);
                 editTodo({
                   variables: {
                     id: t.id,
                     text,
                   },
-                  optimisticResponse: {
-                    mutation: 'UPDATED',
-                    node: {
-                      ...t,
-                      task: text,
-                    },
-                  },
+                  optimisticResponse,
                 });
               }}
             >
