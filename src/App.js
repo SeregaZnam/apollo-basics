@@ -50,12 +50,13 @@ function App() {
                 const text = `[MODIFIED ${Math.random()} ${t.task}]`;
 
                 const optimisticResponse = {
-                  __typename: 'TodoResponse',
-                  mutation: 'UPDATED',
-                  node: {
-                    __typename: 'Todo',
-                    id: t.id,
-                    task: `OPTIMISTIC ${t.task}`,
+                  editTodo: {
+                    __typename: 'TodoResponse',
+                    node: {
+                      __typename: 'Todo',
+                      id: t.id,
+                      task: `OPTIMISTIC ${t.task}`,
+                    },
                   },
                 };
 
@@ -66,6 +67,9 @@ function App() {
                     text,
                   },
                   optimisticResponse,
+                  update(cache, result) {
+                    console.log(JSON.stringify(result));
+                  },
                 });
               }}
             >
