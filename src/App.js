@@ -98,6 +98,15 @@ function App() {
             variables: {
               text: newTodoText,
             },
+            optimisticResponse: (vars) => ({
+              newTodo: {
+                node: {
+                  complete: false,
+                  id: `OPTIMISTIC-${Math.random()}`,
+                  task: `OPTIMISTIC-${vars.text}`,
+                },
+              },
+            }),
           })
         }
       >
