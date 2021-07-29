@@ -1,0 +1,5 @@
+fragment TodoBaseData on Todo {
+  complete
+  id
+  task
+}

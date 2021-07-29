@@ -1,14 +1,22 @@
 import './App.css';
 import { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation, useSubscription } from '@apollo/client';
 import ListTodosQuery from './graphql/ListTodos.query.graphql';
 import AddTodoMutation from './graphql/AddTodo.mutation.graphql';
 import EditTodoMutation from './graphql/EditTodo.mutation.graphql';
 import RemoveTodoMutation from './graphql/RemoveTodo.mutation.graphql';
+import NewTodoSubscription from './graphql/NewTodo.subscription.graphql';
 import produce from 'immer';
 
 function App() {
   const { loading, data: { todos } = {} } = useQuery(ListTodosQuery);
+
+  useSubscription(NewTodoSubscription, {
+    onSubscriptionData(data) {
+      console.log('data', data);
+    },
+  });
+
   const [removeTodo] = useMutation(RemoveTodoMutation, {
     refetchQueries: [
       {

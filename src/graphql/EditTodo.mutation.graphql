@@ -1,10 +1,9 @@
+#import "./Todo.fragment.graphql"
+
 mutation EditTodo($id: ID!, $text: String!) {
   editTodo(where: { id: $id }, fields: { task: $text }) {
-    __typename
     node {
-      __typename
-      id
-      task
+      ...TodoBaseData
     }
   }
 }

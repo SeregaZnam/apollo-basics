@@ -1,7 +1,7 @@
+#import "./Todo.fragment.graphql"
+
 query ListTodos {
   todos {
-    id
-    task
-    complete
+    ...TodoBaseData
   }
 }
