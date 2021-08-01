@@ -18,11 +18,15 @@ function App() {
   });
 
   const [removeTodo] = useMutation(RemoveTodoMutation, {
-    refetchQueries: [
-      {
-        query: ListTodosQuery,
-      },
-    ],
+    optimisticResponse: (vars) => ({
+      removeTodo: [vars.id],
+    }),
+    update(cache, result) {
+      console.log(cache, result);
+    },
+    onError(error) {
+      console.log(error);
+    },
   });
   const [addTodo] = useMutation(AddTodoMutation, {
     update(cache, result) {
